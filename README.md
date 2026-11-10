@@ -10,8 +10,21 @@ Setup instructions are completed as the project is built.
 
 ```bash
 npm install
+npm run browser:install  # headless Chromium for shops that block plain requests (~120 MB)
 cp .env.example .env     # then fill in GEMINI_* and SMTP_*
 ```
+
+Model names for `GEMINI_MODEL` must be API ids such as `gemini-3.8-flash`
+(not "flash 3.8").
+
+### Trying a link from the command line
+
+```bash
+npm run probe -- "https://shop.example/product/123"
+```
+
+Prints exactly what the tracker would conclude: the product and price, or the
+reason the link was rejected.
 
 ### Development
 
