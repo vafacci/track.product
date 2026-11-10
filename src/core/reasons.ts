@@ -10,7 +10,7 @@ export const REASONS = {
   network_error: { status: "error", text: "Could not connect to the shop. We'll try again later." },
   blocked: {
     status: "error",
-    text: "The shop blocked the request (bot protection). We'll try again later, with a real browser if enabled.",
+    text: "The shop blocks automated price checks (bot protection). We will retry later, but some shops never allow it — then track the product at another shop.",
   },
   http_error: { status: "error", text: "The shop returned an unexpected error." },
   not_html: { status: "error", text: "The link did not return a web page." },
@@ -27,7 +27,10 @@ export const REASONS = {
     status: "not_found",
     text: "The link now shows a list of several products (category or search page), not a single product.",
   },
-  redirected_elsewhere: { status: "not_found", text: "The link now redirects to a different page." },
+  redirected_elsewhere: {
+    status: "not_found",
+    text: "The link redirects to a different page without this product. If the page opens fine in your own browser, the shop is probably sending automated price checks elsewhere — try the same product at another shop.",
+  },
 
   // Something doesn't add up (status "needs_attention")
   url_changed: {

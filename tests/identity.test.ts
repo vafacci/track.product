@@ -28,6 +28,14 @@ describe("the real Dell case", () => {
     expect(r.reason).toBe("redirected_elsewhere");
     expect(r.message).toMatch(/redirects to a different page/);
   });
+
+  it("an \"Access Denied\" bot-protection page is reported as blocked, not as a missing product", async () => {
+    const r = await analyzePage(
+      { requestedUrl: DELL_URL, finalUrl: DELL_URL, redirectChain: [DELL_URL], status: 200, mode: "browser", html: "<html><head><title>Access Denied</title></head><body>You don't have permission</body></html>" },
+      { llm: noAi },
+    );
+    expect(r).toMatchObject({ ok: false, status: "error", reason: "blocked" });
+  });
 });
 
 describe("page classification", () => {

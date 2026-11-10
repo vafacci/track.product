@@ -3,6 +3,8 @@ import type { FetchedPage } from "@/core/fetch/types";
 import { CheckError } from "@/core/reasons";
 import { sameUrl } from "./normalize-url";
 
+const BLOCK_PAGE = /access denied|forbidden|attention required|are you a robot|verify you are human|just a moment|captcha|request blocked/i;
+
 export type Classification =
   /** A single main product was found in structured data. */
   | { kind: "product"; redirected: boolean }
@@ -20,6 +22,10 @@ export function classifyPage(page: FetchedPage, ex: Extraction, knownUrls: strin
   const { signals } = ex;
 
   if (page.status === 404 || page.status === 410) throw new CheckError("http_404", undefined, page.status);
+  // Bot-protection pages often answer with HTTP 200; they say nothing about the product.
+  if (BLOCK_PAGE.test(signals.title ?? "") && !ex.product) {
+    throw new CheckError("blocked", `the shop answered "${signals.title}"`, page.status);
+  }
   if (signals.errorMessage) throw new CheckError("error_page", `"${signals.errorMessage}"`, page.status);
 
   const known = (u: string | null) => !!u && knownUrls.some((k) => sameUrl(k, u));
