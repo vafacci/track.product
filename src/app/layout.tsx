@@ -24,12 +24,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
               <Link href="/" className="rounded-md px-3 py-1.5 hover:bg-black/5 dark:hover:bg-white/10">
                 Products
               </Link>
-              <span
-                title="Coming in a later build step"
-                className="cursor-not-allowed rounded-md bg-foreground/80 px-3 py-1.5 text-background opacity-50"
-              >
+              <Link href="/add" className="rounded-md bg-foreground px-3 py-1.5 font-medium text-background">
                 + Add link
-              </span>
+              </Link>
             </nav>
           </div>
         </header>
