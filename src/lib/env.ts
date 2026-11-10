@@ -29,6 +29,8 @@ const schema = z.object({
 
   GEMINI_API_KEY: optionalString,
   GEMINI_MODEL: optionalString,
+  // Optional: used when GEMINI_MODEL is overloaded or unavailable.
+  GEMINI_FALLBACK_MODEL: optionalString,
 
   SMTP_HOST: optionalString,
   SMTP_PORT: z.coerce.number().default(587),
